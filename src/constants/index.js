@@ -6,20 +6,25 @@ export const navLinks = [
     title: "Home",
   },
   {
-    id: "features",
-    title: "Features",
+    id: "services",
+    title: "Services",
   },
   {
     id: "product",
     title: "Product",
   },
+  /*
   {
     id: "clients",
     title: "Clients",
+  },*/
+  {
+    id: "login",
+    title: "Login",
   },
 ];
 
-export const features = [
+export const services = [
   {
     id: "feature-1",
     icon: star,
@@ -74,17 +79,17 @@ export const stats = [
   {
     id: "stats-1",
     title: "User Active",
-    value: "3800+",
+    value: "250+",
   },
   {
     id: "stats-2",
     title: "Trusted by Company",
-    value: "230+",
+    value: "25+",
   },
   {
     id: "stats-3",
     title: "Transaction",
-    value: "$230M+",
+    value: "10k+",
   },
 ];
 
@@ -92,18 +97,18 @@ export const footerLinks = [
   {
     title: "Useful Links",
     links: [
-      {
+      /*{
         name: "Content",
         link: "https://www.hoobank.com/content/",
-      },
+      },*/
       {
         name: "How it Works",
         link: "https://www.hoobank.com/how-it-works/",
       },
-      {
+      /*{
         name: "Create",
         link: "https://www.hoobank.com/create/",
-      },
+      },*/
       {
         name: "Explore",
         link: "https://www.hoobank.com/explore/",
@@ -129,14 +134,14 @@ export const footerLinks = [
         name: "Suggestions",
         link: "https://www.hoobank.com/suggestions/",
       },
-      {
+      /*{
         name: "Blog",
         link: "https://www.hoobank.com/blog/",
       },
       {
         name: "Newsletters",
         link: "https://www.hoobank.com/newsletters/",
-      },
+      },*/
     ],
   },
   {
