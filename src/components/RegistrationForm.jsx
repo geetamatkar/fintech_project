@@ -60,6 +60,7 @@ const RegistrationForm = () => {
      // window.location.href = '/Login';
      resetForm();
      alert('Registration successful!');
+     window.location.href = '/login';
     } catch (error) {
       console.error('Error registering user:', error.message);
       setError('Error registering user. Please try again.');
