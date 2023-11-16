@@ -12,7 +12,11 @@ const Navbar = () => {
     setActive(title);
     if (title === "Home") {
       navigate("/");
-    } else {
+    }
+    else if(title === "Login") {
+      navigate("/login");
+    }
+     else {
       // Handle other navigation logic if needed
       // For example: navigate(`/${title.toLowerCase()}`)
     }

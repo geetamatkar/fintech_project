@@ -11,21 +11,69 @@ const RegistrationForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState(''); // Added state for re-entering password
+  const [error, setError] = useState('');
+
+  const resetForm = () => {
+    setFirstName('');
+    setLastName('');
+    setDob('');
+    setEmail('');
+    setUsername('');
+    setPassword('');
+    setRePassword('');
+    setError('');
+  };
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // In a real-world scenario, you would perform form validation here
+    
+    // Password validation
+    if (password !== rePassword) {
+      setError('Passwords do not match!');
+      return;
+    }
 
     // Display form data in the console (for demo purposes)
     console.log('Submitted Data:', { firstName, lastName, dob, email, username, password, rePassword });
 
     // In a real-world scenario, you would send the data to the server for processing and storage
+
+
+    try {
+      // Make API call to register user
+      const response = await fetch('http://localhost:8008/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, dob, email, username, password }),
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+
+      // Registration successful, redirect to the login page
+
+     // window.location.href = '/Login';
+     resetForm();
+     alert('Registration successful!');
+    } catch (error) {
+      console.error('Error registering user:', error.message);
+      setError('Error registering user. Please try again.');
+    }
   };
+
+  
+
+
   return (
     <div className="max-w-lg mx-auto mt-8 p-8 border rounded shadow-md">
       <h2 className="text-2xl text-white font-bold mb-4">Customer Registration</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="firstName" className="text-sm font-medium text-gray-600">

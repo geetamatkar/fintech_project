@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import Testimonials from "./Testimonials";
 import Hero from "./Hero";
 import RegistrationForm  from "./RegistrationForm";
+import Login from "./Login";
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   Testimonials,
   Hero,
   RegistrationForm,
+  Login
 };
