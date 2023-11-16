@@ -17,7 +17,7 @@ const Home = () => (
     <CTA />
   </div>
 );
-
+  
 const App = () => (
   <Router>
     <div className="bg-primary w-full overflow-hidden">
