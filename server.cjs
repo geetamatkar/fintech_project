@@ -1,0 +1,81 @@
+const express = require('express');
+const mysql = require('mysql');
+const cors = require('cors');
+
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'fintech',
+  });
+
+  db.connect((err) => {
+    if (err) {
+      console.error('Database connection failed:', err);
+    } else {
+      console.log('Connected to MySQL database');
+    }
+  });
+
+const PORT = process.env.PORT || 8008;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+app.post('/api/register', (req, res) => {
+    const { firstName, lastName, dob, email, username, password } = req.body;
+  
+    const registerUserQuery =
+      'INSERT INTO users (firstName, lastName, dob, email, username, password) VALUES (?, ?, ?, ?, ?, ?)';
+  
+    db.query(
+      registerUserQuery,
+      [firstName, lastName, dob, email, username, password],
+      (err, result) => {
+        if (err) {
+          console.error('Error registering user:', err);
+          res.status(500).send('Internal Server Error');
+        } else {
+          res.status(200).send('User registered successfully');
+        }
+      }
+    );
+  });
+
+// Assuming you have already set up your Express app and connected to the database
+
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+
+  const selectUserQuery = 'SELECT * FROM users WHERE username = ? AND password = ?';
+
+  db.query(selectUserQuery, [username, password], (err, results) => {
+    if (err) {
+      console.error('Error selecting user:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      console.log(results);
+      if (results.length > 0) {
+        const user = {
+          username: results[0].username,
+          password: results[0].password,
+          usertype: results[0].usertype
+        };
+        console.log(user);
+        res.status(200).send({
+          status: 200,
+          message: "Login Successful",
+          data: { user }
+        });
+      } else {
+        res.status(401).send('Invalid credentials');
+      }
+    }
+  });
+});

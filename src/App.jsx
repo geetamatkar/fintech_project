@@ -4,6 +4,7 @@ import { Navbar, Hero, Stats, Business, Billing, CardDeal, Testimonials, Clients
 
 import RegistrationForm from "./components/RegistrationForm";
 import GetStarted from "./components/GetStarted";
+import Login from "./components/Login";
 
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
@@ -17,7 +18,7 @@ const Home = () => (
     <CTA />
   </div>
 );
-
+  
 const App = () => (
   <Router>
     <div className="bg-primary w-full overflow-hidden">
@@ -27,6 +28,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Home/>} />
             <Route path="/register" element={<RegistrationForm />} />
+            <Route path="/login" element={<Login/>} />
             {/* Add more routes as needed */}
           </Routes>
         <Footer />
