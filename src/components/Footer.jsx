@@ -15,7 +15,7 @@ const Footer = () => (
                   src={logo}
                   alt="ByteBank"
                   className="w-[266px] h-[72.14px] object-contain"
-/>*/}
+/>
         <h1 className="text-gradient text-[34px]">Quantum Vault</h1>{" "}
         <p className={`${styles.paragraph} mt-4 max-w-[312px]`}>
           A new way to make the payments easy, reliable and secure.
@@ -41,7 +41,7 @@ const Footer = () => (
               ))}
             </ul>
           </div>
-        ))}
+                ))}*/}
       </div>
     </div>
 

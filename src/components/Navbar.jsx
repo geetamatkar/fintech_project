@@ -1,12 +1,23 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { close, logo, menu } from "../assets";
 import { navLinks } from "../constants";
 
 const Navbar = () => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);
+  const navigate = useNavigate();
 
+  const handleNavLinkClick = (title) => {
+    setActive(title);
+    if (title === "Home") {
+      navigate("/");
+    } else {
+      // Handle other navigation logic if needed
+      // For example: navigate(`/${title.toLowerCase()}`)
+    }
+  };
+  
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
       {/*<img src={logo} alt="hoobank" className="w-[124px] h-[32px]" />*/}
@@ -20,7 +31,7 @@ const Navbar = () => {
             className={`font-poppins font-normal cursor-pointer text-[16px] ${
               active === nav.title ? "text-white" : "text-dimWhite"
             } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
-            onClick={() => setActive(nav.title)}
+            onClick={() => handleNavLinkClick(nav.title)}
           >
             <a href={`#${nav.id}`}>{nav.title}</a>
           </li>
