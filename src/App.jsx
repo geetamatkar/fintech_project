@@ -5,17 +5,14 @@ import { Navbar, Hero, Stats, Business, Billing, CardDeal, Testimonials, Clients
 import RegistrationForm from "./components/RegistrationForm";
 import GetStarted from "./components/GetStarted";
 import Login from "./components/Login";
-<<<<<<< HEAD
 import Loan from "./components/Loan";
 import HomeLoan from "./components/HomeLoan";
 import PersonalLoan from "./components/PersonalLoan";
 import AutoLoan from "./components/AutoLoan";
-=======
 import Services from "./components/Services";
 import CreditCards from "./components/Creditcards";
 import LoanTypes from "./components/LoanTypes";
 import Cryptocurrency from "./components/CryptoCurrency";
->>>>>>> upstream/main
 
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
@@ -35,17 +32,14 @@ const App = () => (
             <Route path="/" element={<Home/>} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/login" element={<Login/>} />
-<<<<<<< HEAD
             <Route path="/loan" element={<Loan/>} />
             <Route path="/home-loan" element={<HomeLoan/>} />
             <Route path="/personal-loan" element={<PersonalLoan/>} />
             <Route path="/auto-loan" element={<AutoLoan/>} />
-=======
             <Route path="/services" element={<Services/>} /> 
             <Route path="/creditcards" element={<CreditCards/>} />
             <Route path="/loans" element={<LoanTypes/>} />
             <Route path="/cryptocurrency" element={<Cryptocurrency/>} />
->>>>>>> upstream/main
             {/* Add more routes as needed */}
           </Routes>
         <Footer />
