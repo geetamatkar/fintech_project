@@ -77,12 +77,8 @@ const Login = () => {
   };
 
   return (
-  
-   
-
     <div class="flex-col min-h-fit flex justify-center">
     <div className="max-w-xl mx-auto mt-16 p-16 border rounded shadow-md w-full">
-
       <h2 className="text-2xl text-white font-bold mb-4">Login</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
@@ -130,13 +126,7 @@ const Login = () => {
         </p>
       </form>
     </div>
-
-      
-
-    
-
   </div>
-
   );
 };
 
