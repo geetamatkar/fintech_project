@@ -23,6 +23,16 @@ import twitter from "./twitter.svg";
 import people01 from "./people01.png";
 import people02 from "./people02.png";
 import people03 from "./people03.png";
+import sapphire from "./sapphire.png";
+import freedomflex from "./flex.png";
+import unlimited from "./unlimited.png";
+import homeloan from "./homeloan.png";
+import auto from "./auto.png";
+import personalloan from "./personalloan.png";
+import binancec from "./binancec.png"; 
+import bitcoin from "./bitcoin.png";
+import etherium from "./etherium.png";
+
 
 export {
   airbnb,
@@ -50,4 +60,13 @@ export {
   people01,
   people02,
   people03,
+  sapphire,
+  freedomflex,
+  unlimited,
+  homeloan,
+  auto,
+  personalloan,
+  bitcoin,
+  binancec,
+  etherium,
 };

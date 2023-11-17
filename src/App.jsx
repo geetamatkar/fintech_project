@@ -5,17 +5,18 @@ import { Navbar, Hero, Stats, Business, Billing, CardDeal, Testimonials, Clients
 import RegistrationForm from "./components/RegistrationForm";
 import GetStarted from "./components/GetStarted";
 import Login from "./components/Login";
+import Services from "./components/Services";
+import CreditCards from "./components/Creditcards";
+import LoanTypes from "./components/LoanTypes";
+import Cryptocurrency from "./components/CryptoCurrency";
 
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
     <Hero />
-    <Stats />
     <Business />
     <Billing />
     <CardDeal />
     <Testimonials />
-    <Clients />
-    <CTA />
   </div>
 );
   
@@ -29,6 +30,10 @@ const App = () => (
             <Route path="/" element={<Home/>} />
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/services" element={<Services/>} /> 
+            <Route path="/creditcards" element={<CreditCards/>} />
+            <Route path="/loans" element={<LoanTypes/>} />
+            <Route path="/cryptocurrency" element={<Cryptocurrency/>} />
             {/* Add more routes as needed */}
           </Routes>
         <Footer />
