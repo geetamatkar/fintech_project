@@ -15,6 +15,7 @@ import LoanTypes from "./components/LoanTypes";
 import Cryptocurrency from "./components/CryptoCurrency";
 import CreditCardApplyForm from "./components/CreditCardApplyForm";
 import Contact from "./components/Contact";
+import AutocompleteSearch from "./components/AutoCompleteSearch";
 
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
@@ -44,6 +45,8 @@ const App = () => (
             <Route path="/cryptocurrency" element={<Cryptocurrency/>} />
             <Route path="/credit-card" element={<CreditCardApplyForm/>} />
             <Route path="/contact" element={<Contact/>} />
+            <Route path="/AutocompleteSearch" element={<AutocompleteSearch/>} />
+"
             {/* Add more routes as needed */}
           </Routes>
         <Footer />

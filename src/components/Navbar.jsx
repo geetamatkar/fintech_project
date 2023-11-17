@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { close, menu } from "../assets";
 import { navLinks } from "../constants";
 import Logout from "./Logout"; // Import the Logout component
+import AutocompleteSearch from "./AutoCompleteSearch";
 
 const Navbar = () => {
   const [active, setActive] = useState("Home");
@@ -42,11 +43,12 @@ const Navbar = () => {
   };
 
   return (
-      <nav className="w-full flex py-6 justify-between items-center navbar">
+    <nav className="w-full flex py-6 justify-between items-center navbar">
         {/* Your logo or site name */}
-        <a href="/" className="text-gradient text-[34px]">
+        <a href="/" className="text-gradient text-[34px] flex-1 justify-start">
           Quantum Vault
         </a>{" "}
+        
         <ul className="list-none sm:flex hidden justify-end items-center flex-1">
           {navLinks.map((nav, index) => {
             if (nav.title === "Login" && isLoggedIn) {
@@ -73,6 +75,9 @@ const Navbar = () => {
           )}
         </ul>
       {/* Rest of your code for responsive design */}
+      <div className="flex items-center flex-1 justify-end">
+          <AutocompleteSearch />
+        </div>
     </nav>
   );
 };
