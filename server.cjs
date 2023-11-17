@@ -238,6 +238,56 @@ app.post('/api/auto-loan', (req, res) => {
   );
 });
 
+// ... (existing imports and configurations)
+
+app.post('/api/credit-card', (req, res) => {
+  const {
+    fullName,
+    dateOfBirth,
+    ssn,
+    email,
+    phoneNumber,
+    bankAccountNumber,
+    employmentStatus,
+    annualIncome,
+    monthlyHousingRent,
+    numExistingCreditCards,
+    creditScore,
+  } = req.body;
+
+  const insertCreditCardApplicationQuery = `INSERT INTO credit_card_application 
+    (fullName, dateOfBirth, ssn, email, phoneNumber, bankAccountNumber, employmentStatus, annualIncome, monthlyHousingRent, numExistingCreditCards, creditScore) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.query(
+    insertCreditCardApplicationQuery,
+    [
+      fullName,
+      dateOfBirth,
+      ssn,
+      email,
+      phoneNumber,
+      bankAccountNumber,
+      employmentStatus,
+      annualIncome,
+      monthlyHousingRent,
+      numExistingCreditCards,
+      creditScore,
+    ],
+    (err, result) => {
+      if (err) {
+        console.error('Error inserting credit card application data:', err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.status(200).send('Credit card application submitted successfully');
+      }
+    }
+  );
+});
+
+// ... (other existing endpoints and server configurations)
+
+
 
 
 

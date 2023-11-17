@@ -1,22 +1,12 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
 
-const Logout = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Clear the user data from localStorage and update login state
-    localStorage.removeItem('loggedInUser');
-    navigate('/login'); // Redirect to login page after logout
+const Logout = ({ handleLogout }) => {
+  const handleLogoutClick = () => {
+    handleLogout(); // Call the handleLogout function passed from Navbar
   };
 
   return (
-    <button
-      className="font-poppins font-normal cursor-pointer text-[16px] text-dimWhite"
-      onClick={handleLogout}
-    >
-      Logout
-    </button>
+    <button onClick={handleLogoutClick}>Logout</button>
   );
 };
 

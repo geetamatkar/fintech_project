@@ -87,6 +87,7 @@ const AutoLoan = () => {
     
         if (response.ok) {
           console.log('Loan application submitted successfully');
+          alert('Your Auto Loan application has been received!');
           // Reset form after submission
           setFormData({
             // Reset your form fields here
