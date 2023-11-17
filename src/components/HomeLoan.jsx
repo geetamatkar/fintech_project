@@ -84,6 +84,7 @@ const HomeLoan = () => {
     
         if (response.ok) {
           console.log('Loan application submitted successfully');
+          alert('Your Home Loan application has been received!');
           // Reset form after submission
           setFormData({
             // Reset your form fields here

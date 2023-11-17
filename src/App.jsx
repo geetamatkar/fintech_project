@@ -13,6 +13,8 @@ import Services from "./components/Services";
 import CreditCards from "./components/Creditcards";
 import LoanTypes from "./components/LoanTypes";
 import Cryptocurrency from "./components/CryptoCurrency";
+import CreditCardApplyForm from "./components/CreditCardApplyForm";
+import Contact from "./components/Contact";
 
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
@@ -40,6 +42,8 @@ const App = () => (
             <Route path="/creditcards" element={<CreditCards/>} />
             <Route path="/loans" element={<LoanTypes/>} />
             <Route path="/cryptocurrency" element={<Cryptocurrency/>} />
+            <Route path="/credit-card" element={<CreditCardApplyForm/>} />
+            <Route path="/contact" element={<Contact/>} />
             {/* Add more routes as needed */}
           </Routes>
         <Footer />

@@ -25,6 +25,11 @@ const Navbar = () => {
       navigate("/services");
 
     }
+    else if(title === "Contact") {
+      navigate("/contact");
+
+    }
+
      else {
       // Handle other navigation logic if needed
       // For example: navigate(`/${title.toLowerCase()}`)
