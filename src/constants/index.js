@@ -22,11 +22,6 @@ export const navLinks = [
     id: "login",
     title: "Login",
   },
-
-  {
-    id: "loans",
-    title: "Loans",
-  }
 ];
 
 export const services = [
