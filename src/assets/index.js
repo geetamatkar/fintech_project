@@ -32,6 +32,7 @@ import personalloan from "./personalloan.png";
 import binancec from "./binancec.png"; 
 import bitcoin from "./bitcoin.png";
 import etherium from "./etherium.png";
+import homeImage from "./homeImage.png";
 
 
 export {
@@ -69,4 +70,5 @@ export {
   bitcoin,
   binancec,
   etherium,
+  homeImage
 };

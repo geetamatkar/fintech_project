@@ -20,8 +20,6 @@ import Cryptocurrency from "./components/CryptoCurrency";
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
     <Hero />
-    <Business />
-    <Billing />
     <CardDeal />
     <Testimonials />
   </div>
