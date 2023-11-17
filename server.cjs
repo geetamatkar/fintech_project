@@ -79,3 +79,168 @@ app.post('/api/login', (req, res) => {
     }
   });
 });
+
+app.post('/api/home-loan', (req, res) => {
+  const {
+    email,
+    //phoneNumber,
+    monthlyIncome,
+    loanAmount,
+    hasCurrentLoan,
+    numberOfLoans,
+    loanTypes,
+    totalLoanAmount,
+    //proofOfIncome,
+    ssnNumber,
+    propertyAddress,
+    propertyType,
+    propertyValue,
+    creditScore,
+    loanReason,
+  } = req.body;
+
+  const insertLoanQuery = `INSERT INTO home_loan 
+    (email, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount,ssnNumber, loanReason, propertyAddress, propertyType, propertyValue,creditScore) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.query(
+    insertLoanQuery,
+    [
+      email,
+      //phoneNumber,
+      monthlyIncome,
+      loanAmount,
+      hasCurrentLoan,
+      numberOfLoans,
+      loanTypes,
+      totalLoanAmount,
+      //proofOfIncome,
+      ssnNumber,
+      loanReason,
+      propertyAddress,
+      propertyType,
+      propertyValue,
+      creditScore,
+      
+    ],
+    (err, result) => {
+      if (err) {
+        console.error('Error inserting loan data:', err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.status(200).send('Loan application submitted successfully');
+      }
+    }
+  );
+});
+
+// ... (existing code)
+
+app.post('/api/personal-loan', (req, res) => {
+  const {
+    email,
+    monthlyIncome,
+    loanAmount,
+    hasCurrentLoan,
+    numberOfLoans,
+    loanTypes,
+    totalLoanAmount,
+    ssnNumber,
+    loanReason,
+    dateOfBirth,
+    creditScore,
+    loanRepaymentPeriod,
+  } = req.body;
+
+  const insertPersonalLoanQuery = `INSERT INTO personal_loan 
+    (email, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount, ssnNumber, loanReason, dateOfBirth, creditScore, loanRepaymentPeriod) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.query(
+    insertPersonalLoanQuery,
+    [
+      email,
+      monthlyIncome,
+      loanAmount,
+      hasCurrentLoan,
+      numberOfLoans,
+      loanTypes,
+      totalLoanAmount,
+      ssnNumber,
+      loanReason,
+      dateOfBirth,
+      creditScore,
+      loanRepaymentPeriod,
+    ],
+    (err, result) => {
+      if (err) {
+        console.error('Error inserting personal loan data:', err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.status(200).send('Personal loan application submitted successfully');
+      }
+    }
+  );
+});
+
+
+app.post('/api/auto-loan', (req, res) => {
+  const {
+    email,
+    monthlyIncome,
+    loanAmount,
+    hasCurrentLoan,
+    numberOfLoans,
+    loanTypes,
+    totalLoanAmount,
+    ssnNumber,
+    loanReason,
+    dateOfBirth,
+    creditScore,
+    loanRepaymentPeriod,
+    makeAndModel,
+    purchasePrice,
+    VIN,
+    yearOfManufacture,
+  } = req.body;
+
+  const insertAutoLoanQuery = `INSERT INTO auto_loan 
+    (email, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount, ssnNumber, loanReason, dateOfBirth, creditScore, loanRepaymentPeriod, makeAndModel, purchasePrice, VIN, yearOfManufacture) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.query(
+    insertAutoLoanQuery,
+    [
+      email,
+      monthlyIncome,
+      loanAmount,
+      hasCurrentLoan,
+      numberOfLoans,
+      loanTypes,
+      totalLoanAmount,
+      ssnNumber,
+      loanReason,
+      dateOfBirth,
+      creditScore,
+      loanRepaymentPeriod,
+      makeAndModel,
+      purchasePrice,
+      VIN,
+      yearOfManufacture,
+    ],
+    (err, result) => {
+      if (err) {
+        console.error('Error inserting auto loan data:', err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.status(200).send('Auto loan application submitted successfully');
+      }
+    }
+  );
+});
+
+
+
+
+
+
+

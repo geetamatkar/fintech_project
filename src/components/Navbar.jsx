@@ -16,8 +16,13 @@ const Navbar = () => {
     else if(title === "Login") {
       navigate("/login");
     }
+<<<<<<< HEAD
+    else if(title === "Loans") {
+      navigate("/loan");
+=======
     else if(title === "Services") {
       navigate("/services");
+>>>>>>> upstream/main
     }
      else {
       // Handle other navigation logic if needed
