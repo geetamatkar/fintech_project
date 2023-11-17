@@ -1,7 +1,22 @@
 import React from 'react';
 import { homeloan, personalloan, auto } from '../assets';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoanTypes = () => {
+
+  const navigate = useNavigate();
+  const redirectToPersonalLoan = () => {
+    navigate('/personal-loan'); // Redirect to the PersonalLoan route
+  };
+
+  const redirectToHomeLoan = () => {
+    navigate('/home-loan'); // Redirect to the PersonalLoan route
+  };
+
+  const redirectToAutoLoan = () => {
+    navigate('/auto-loan'); // Redirect to the PersonalLoan route
+  };
   return (
     <div className="flex flex-wrap justify-center">
       {/* Personal Loan */}
@@ -24,7 +39,7 @@ const LoanTypes = () => {
           </ul>
         </div>
         <div className="px-6 py-4 flex justify-center items-center">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <button onClick={redirectToPersonalLoan} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             Apply Now
           </button>
         </div>
@@ -50,7 +65,7 @@ const LoanTypes = () => {
           </ul>
         </div>
         <div className="px-6 py-4 flex justify-center items-center">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <button onClick={redirectToHomeLoan} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             Apply Now
           </button>
         </div>
@@ -76,7 +91,7 @@ const LoanTypes = () => {
           </ul>
         </div>
         <div className="px-6 py-4 flex justify-center items-center">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <button onClick={redirectToAutoLoan} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             Apply Now
           </button>
         </div>
