@@ -65,37 +65,36 @@ const Contact = () => {
     */
 
     <div className={`flex ${styles.paddingY}`}> {/* Apply padding style */}
-      <div className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6`}>
-        <h2 className="text-white">Our Organization: Quantum Vault</h2>
-        <p className="text-white">Contact Number: +11234567890</p>
-        <p className="text-white">Email: info@quantumvault.com</p>
-
-        <form onSubmit={handleSubmit} className="mt-8">
-          <h3 className="text-white mb-2">Email Us</h3>
-          <label htmlFor="emailContent" className="text-white">
-            Write your message:
-          </label>
-          <textarea
-            id="emailContent"
-            name="emailContent"
-            rows="4"
-            className="border p-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-          ></textarea>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-          >
-            Send Email
-          </button>
-        </form>
-
-      </div>
-      <div className={`flex-1 ${styles.flexCenter} ${styles.marginY}`}> {/* Apply centering and margin styles */}
-        <div id="map" style={{ width: '100%', height: '400px', marginTop: '20px' }}></div>
-      </div>
-
+    <div className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6`}>
+    <div className="text-white">
+        <h2 className="text-3xl font-bold mb-4">Our Organization: Quantum Vault</h2>
+        <p className="text-lg">Contact Number: +11234567890</p>
+        <p className="text-lg">Email: info@quantumvault.com</p>
+        </div>
+      <form onSubmit={handleSubmit} className="mt-8">
+        <h3 className="text-white mb-2">Email Us</h3>
+        <label htmlFor="emailContent" className="text-white">
+          Write your message:
+        </label>
+        <textarea
+          id="emailContent"
+          name="emailContent"
+          rows="4"
+          className="border p-2 rounded focus:outline-none focus:ring focus:border-blue-300 w-full"
+        ></textarea>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Send Email
+        </button>
+      </form>
 
     </div>
+    <div className={`flex-1 ${styles.flexCenter} ${styles.marginY}`}> {/* Apply centering and margin styles */}
+      <div id="map" style={{ width: '100%', height: '400px', marginTop: '20px' }}></div>
+    </div>
+  </div>
   );
 };
 
