@@ -16,6 +16,9 @@ const Navbar = () => {
     else if(title === "Login") {
       navigate("/login");
     }
+    else if(title === "Loans") {
+      navigate("/loan");
+    }
      else {
       // Handle other navigation logic if needed
       // For example: navigate(`/${title.toLowerCase()}`)

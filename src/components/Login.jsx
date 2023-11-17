@@ -1,12 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-
+import { useEffect } from 'react';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is already logged in using localStorage
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Clear the user data from localStorage and update login state
+    localStorage.removeItem('loggedInUser');
+    setIsLoggedIn(false);
+    navigate('/login'); // Redirect to login page after logout
+  };
 
   const resetForm = () => {
     setUsername('');
@@ -43,7 +59,11 @@ const Login = () => {
         throw new Error(errorMessage);
       }
 
+      localStorage.setItem('loggedInUser', username);
+      setIsLoggedIn(true);
+
       // Login successful, perform necessary actions (e.g., redirect to dashboard)
+
 
       resetForm();
       alert('Login successful!');
@@ -57,6 +77,8 @@ const Login = () => {
   };
 
   return (
+    
+       
     <div className="max-w-lg mx-auto mt-8 p-8 border rounded shadow-md">
       <h2 className="text-2xl text-white font-bold mb-4">Login</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -105,6 +127,9 @@ const Login = () => {
         </p>
       </form>
     </div>
+      
+
+    
   );
 };
 

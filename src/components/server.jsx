@@ -47,3 +47,50 @@ app.post('/api/register', (req, res) => {
       }
     );
   });
+
+  app.post('/api/home-loan', (req, res) => {
+    const {
+      email,
+      phoneNumber,
+      monthlyIncome,
+      loanAmount,
+      hasCurrentLoan,
+      numberOfLoans,
+      loanTypes,
+      totalLoanAmount,
+      //proofOfIncome,
+      ssnNumber,
+      loanReason,
+    } = req.body;
+  
+    const insertLoanQuery = `INSERT INTO home_loan 
+      (email, phoneNumber, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount,ssnNumber, loanReason) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  
+    db.query(
+      insertLoanQuery,
+      [
+        email,
+        phoneNumber,
+        monthlyIncome,
+        loanAmount,
+        hasCurrentLoan,
+        numberOfLoans,
+        loanTypes,
+        totalLoanAmount,
+        //proofOfIncome,
+        ssnNumber,
+        loanReason,
+      ],
+      (err, result) => {
+        if (err) {
+          console.error('Error inserting loan data:', err);
+          res.status(500).send('Internal Server Error');
+        } else {
+          res.status(200).send('Loan application submitted successfully');
+        }
+      }
+    );
+  });
+  
+  
