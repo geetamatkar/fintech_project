@@ -23,18 +23,54 @@ const CreditCardApplyForm = () => {
     });
   };
 
+  const handleCreditCardApproval = () => {
+    // Example conditions for credit card approval
+    const {
+      annualIncome,
+      monthlyHousingRent,
+      numExistingCreditCards,
+      creditScore,
+    } = formData;
+
+    // Basic conditions (customize as needed)
+    if (
+      parseInt(annualIncome, 10) >= 50000 &&
+      parseInt(monthlyHousingRent, 10) <= 2000 &&
+      parseInt(numExistingCreditCards, 10) <= 2 &&
+      parseInt(creditScore, 10) >= 700
+    ) {
+      return true; // Approved
+    } else {
+      return false; // Disapproved
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form Data:', formData);
 
     try {
-      const response = await fetch('http://localhost:8008/api/credit-card', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+        // Credit card approval check
+        const isApproved = handleCreditCardApproval();
+  
+        if (isApproved) {
+          alert('Congratulations! Your credit card application has been approved!');
+          console.log('Credit card application approved');
+        } else {
+          alert('Sorry, your credit card application has been disapproved.');
+          console.log('Credit card application disapproved');
+          return; // Do not proceed with submission if disapproved
+        }
+  
+        // Continue with form submission to the server
+        const response = await fetch('http://localhost:8008/api/credit-card', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
 
       if (response.ok) {
         alert('Your credit card application has been received!!');

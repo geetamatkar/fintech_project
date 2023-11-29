@@ -9,14 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "chart.js": "^4.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "faker": "^5.5.3",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.3",
     "react": "^18.2.0",
     "react-autocomplete": "^1.8.1",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0"
+    "react-router-dom": "^6.18.0",
+    "react-table": "^7.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.15",

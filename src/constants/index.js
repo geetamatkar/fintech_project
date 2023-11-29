@@ -13,14 +13,19 @@ export const navLinks = [
     id: "contact",
     title: "Contact",
   },
-  /*
-  {
-    id: "clients",
-    title: "Clients",
-  },*/
+  
   {
     id: "login",
     title: "Login",
+  },
+
+  {
+    id: "data-analytics",
+    title: "Data Analytics",
+    subItems: [
+      { id: "applications", title: "Application Analysis" },
+      { id: "crytocurrency-analysis", title: "Cryptocurrency Analysis" },
+    ],
   },
 ];
 

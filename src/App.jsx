@@ -16,6 +16,9 @@ import Cryptocurrency from "./components/CryptoCurrency";
 import CreditCardApplyForm from "./components/CreditCardApplyForm";
 import Contact from "./components/Contact";
 import AutocompleteSearch from "./components/AutoCompleteSearch";
+import ReviewForm from "./components/ReviewForm";
+import DataAnalyticsApplication from "./components/DataAnalyticsApplication";
+import DataAnalysisCrypto from "./components/DataAnalysisCrypto";
 
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
@@ -46,6 +49,9 @@ const App = () => (
             <Route path="/credit-card" element={<CreditCardApplyForm/>} />
             <Route path="/contact" element={<Contact/>} />
             <Route path="/AutocompleteSearch" element={<AutocompleteSearch/>} />
+            <Route path="/ReviewForm" element={<ReviewForm/>} />
+            <Route path="/DataAnalyticsApplication" element={<DataAnalyticsApplication/>} />
+            <Route path="/DataAnalysisCrypto" element={<DataAnalysisCrypto/>} />
 "
             {/* Add more routes as needed */}
           </Routes>
