@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { close, menu } from "../assets";
 import { navLinks } from "../constants";
-import Logout from "./Logout"; // Import the Logout component
+import Logout from "./Logout"; 
 import AutocompleteSearch from "./AutoCompleteSearch";
 
 const Navbar = () => {

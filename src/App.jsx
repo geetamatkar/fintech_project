@@ -47,7 +47,7 @@ const App = () => (
             <Route path="/contact" element={<Contact/>} />
             <Route path="/AutocompleteSearch" element={<AutocompleteSearch/>} />
 "
-            {/* Add more routes as needed */}
+            
           </Routes>
         <Footer />
         </div>
@@ -56,7 +56,7 @@ const App = () => (
       <div className={`bg-primary ${styles.flexStart}`}>
         <div className={`${styles.boxWidth}`}>
           <Routes>
-            {/* Add more routes as needed */}
+            
           </Routes>
         </div>
       </div>
@@ -64,7 +64,7 @@ const App = () => (
       <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
           <Routes>
-            {/* Add more routes as needed */}
+            
           </Routes>
         </div>
       </div>

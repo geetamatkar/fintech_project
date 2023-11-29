@@ -3,6 +3,11 @@ import styles from '../style';
 
 const Contact = () => {
 
+    //const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+    const googleMapsApiKey = import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
+    console.log(import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY)
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Logic to handle form submission (e.g., sending email) goes here
@@ -15,10 +20,21 @@ const Contact = () => {
   useEffect(() => {
     // Load Google Maps API
     const loadGoogleMapsScript = () => {
+       
+        if (!window.google) {
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAzHKLQPg2XBB_2nfWmcl0MEzaYesitNzU&callback=initMap`;
+      //script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap`;
       script.defer = true;
+      //
+      script.onload = () => {
+        initMap();
+      };
       document.head.appendChild(script);
+    } 
+    else {
+        initMap();
+      }
     };
 
     window.initMap = () => {
@@ -28,11 +44,14 @@ const Contact = () => {
         { lat: 34.0522, lng: -118.2437 },
         { lat: 41.83499, lng: -87.62704 },
         { lat: 41.87924, lng: -87.64227 },
+        { lat: 41.76291, lng: -88.14240 },
+        { lat: 39.125554, lng: -84.53485 },
+        { lat: 39.81927, lng: -89.61977 },
         // Add more locations as needed
       ];
 
       const map = new window.google.maps.Map(document.getElementById('map'), {
-        center: { lat: 40.7128, lng: -74.006 },
+        center: { lat: 41.83499, lng: -87.62704 },
         zoom: 6,
       });
 
@@ -68,11 +87,11 @@ const Contact = () => {
     <div className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6`}>
     <div className="text-white">
         <h2 className="text-3xl font-bold mb-4">Our Organization: Quantum Vault</h2>
-        <p className="text-lg">Contact Number: +11234567890</p>
+        <p className="text-lg">Contact us at: +11234567890</p>
         <p className="text-lg">Email: info@quantumvault.com</p>
         </div>
       <form onSubmit={handleSubmit} className="mt-8">
-        <h3 className="text-white mb-2">Email Us</h3>
+        <h3 className="text-white mb-2">Any queries?</h3>
         <label htmlFor="emailContent" className="text-white">
           Write your message:
         </label>
@@ -86,14 +105,16 @@ const Contact = () => {
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
         >
-          Send Email
+          Send
         </button>
       </form>
 
     </div>
-    <div className={`flex-1 ${styles.flexCenter} ${styles.marginY}`}> {/* Apply centering and margin styles */}
+    <div className={`flex-1 ${styles.flexCenter} ${styles.marginY}`}> 
+     
       <div id="map" style={{ width: '100%', height: '400px', marginTop: '20px' }}></div>
-    </div>
+      </div>
+    
   </div>
   );
 };

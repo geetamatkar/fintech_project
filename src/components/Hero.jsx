@@ -28,9 +28,7 @@ const Hero = () => {
         Quantum Intelligence.
         </h1>
         <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
-          Experience a quantum leap in finance with our revolutionary AI technology, 
-          elevating decision-making and predictive analytics. 
-          Harness quantum intelligence to optimize investments and reshape the future of financial services.
+        Dive into a financial transformation using our cutting-edge AI tech. It enhances decision-making and predictions, bringing a whole new level to your financial experience.
         </p>
       </div>
 

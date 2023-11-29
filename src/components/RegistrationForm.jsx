@@ -1,4 +1,3 @@
-// Import React and useState hook
 import React, { useState } from 'react';
 
 // Functional component for the registration form
@@ -6,11 +5,11 @@ const RegistrationForm = () => {
   // State variables to store form data
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [dob, setDob] = useState(''); // Added state for date of birth
+  const [dob, setDob] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rePassword, setRePassword] = useState(''); // Added state for re-entering password
+  const [rePassword, setRePassword] = useState(''); 
   const [error, setError] = useState('');
 
   const resetForm = () => {
@@ -37,7 +36,7 @@ const RegistrationForm = () => {
     // Display form data in the console (for demo purposes)
     console.log('Submitted Data:', { firstName, lastName, dob, email, username, password, rePassword });
 
-    // In a real-world scenario, you would send the data to the server for processing and storage
+    
 
 
     try {
@@ -72,7 +71,7 @@ const RegistrationForm = () => {
 
   return (
     <div className="max-w-lg mx-auto mt-8 p-8 border rounded shadow-md">
-      <h2 className="text-2xl text-white font-bold mb-4">Customer Registration</h2>
+      <h2 className="text-2xl text-white font-bold mb-4">Register Here</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">

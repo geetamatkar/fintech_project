@@ -48,7 +48,7 @@ app.post('/api/register', (req, res) => {
     );
   });
 
-// Assuming you have already set up your Express app and connected to the database
+
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
@@ -133,7 +133,7 @@ app.post('/api/home-loan', (req, res) => {
   );
 });
 
-// ... (existing code)
+
 
 app.post('/api/personal-loan', (req, res) => {
   const {
@@ -238,7 +238,6 @@ app.post('/api/auto-loan', (req, res) => {
   );
 });
 
-// ... (existing imports and configurations)
 
 app.post('/api/credit-card', (req, res) => {
   const {
@@ -285,7 +284,7 @@ app.post('/api/credit-card', (req, res) => {
   );
 });
 
-// ... (other existing endpoints and server configurations)
+
 
 
 
