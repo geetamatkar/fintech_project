@@ -37,7 +37,7 @@ const Hero = () => {
        <img
       src={homeImage}
       alt="billing"
-      className="w-[100%] h-[100%] relative z-[5] border-[10px] border-transparent filter blur-[1px] backdrop-blur-[10px]"
+      className="w-[65%] h-[75%] relative z-[25] border-[10px] border-transparent filter blur-[1px] backdrop-blur-[10px]"
     />
 
 

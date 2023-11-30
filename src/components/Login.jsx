@@ -33,7 +33,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
    // const navigate = useNavigate();
-    // Validation logic (you can add more specific validation here if needed)
+    
     if (!username || !password) {
       setError('Please enter both username and password.');
       return;
@@ -47,7 +47,7 @@ const Login = () => {
     try {
       // Make API call to authenticate user
       const response = await fetch('http://localhost:8008/api/login', {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },

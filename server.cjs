@@ -284,6 +284,21 @@ app.post('/api/credit-card', (req, res) => {
   );
 });
 
+app.post('/api/crypto-form', (req, res) => {
+  const { username, amount, accountNumber } = req.body;
+
+  // Assuming 'crypto_form' is the name of your table for crypto form data
+  const insertCryptoFormQuery = `INSERT INTO crypto_form (username, amount, accountNumber) VALUES (?, ?, ?)`;
+
+  db.query(insertCryptoFormQuery, [username, amount, accountNumber], (err, result) => {
+    if (err) {
+      console.error('Error inserting crypto form data:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).send('Crypto form submitted successfully');
+    }
+  });
+});
 
 
 
