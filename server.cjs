@@ -253,13 +253,14 @@ app.post('/api/credit-card', (req, res) => {
     numExistingCreditCards,
     creditScore,
     username,
-    status
+    status,
+    creditcardname
 
   } = req.body;
 
   const insertCreditCardApplicationQuery = `INSERT INTO credit_card_application 
-    (fullName, dateOfBirth, ssn, email, phoneNumber, bankAccountNumber, employmentStatus, annualIncome, monthlyHousingRent, numExistingCreditCards, creditScore, username, status) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    (fullName, dateOfBirth, ssn, email, phoneNumber, bankAccountNumber, employmentStatus, annualIncome, monthlyHousingRent, numExistingCreditCards, creditScore, username, status, creditcardname) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   db.query(
     insertCreditCardApplicationQuery,
@@ -276,7 +277,8 @@ app.post('/api/credit-card', (req, res) => {
       numExistingCreditCards,
       creditScore,
       username,
-      status
+      status,
+      creditcardname
     ],
     (err, result) => {
       if (err) {

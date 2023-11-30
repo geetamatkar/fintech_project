@@ -14,9 +14,12 @@ const CreditCardApplyForm = () => {
     numExistingCreditCards: '',
     creditScore: '',
     username: '',
+    //creditcardname: '',
   });
 
   const loggedInUser = localStorage.getItem('loggedInUser');
+
+  const cardType = localStorage.getItem('cardName');
 
   useEffect(() => {
     // Pre-populate the username if the user is logged in
@@ -30,6 +33,7 @@ const CreditCardApplyForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setFormData({
       ...formData,
       [name]: value
@@ -63,10 +67,26 @@ const CreditCardApplyForm = () => {
     e.preventDefault();
     console.log('Form Data:', formData);
 
+    const cardNames = {
+      sapphire: "SAPPHIRE PREFERRED® CREDIT CARD",
+      freedomunlimited: "FREEDOM UNLIMITED® CREDIT CARD",
+      freedomflex: "FREEDOM FLEX® CREDIT CARD"
+    };
+   // const cardType = cardNames[window.location.pathname.split('/').pop()]; // Extract card type from URL
+    
+
     try {
         // Credit card approval check
         const isApproved = handleCreditCardApproval();
         const status = isApproved ? 'Approved' : 'Disapproved';
+
+        
+
+        /*const cardName = determineCreditCardName(); // Implement a function to determine the card name
+        setFormData({
+        ...formData,
+        creditcardname: cardName,
+        });*/
   
         if (isApproved) {
           alert('Congratulations! Your credit card application has been approved!');
@@ -84,7 +104,7 @@ const CreditCardApplyForm = () => {
             'Content-Type': 'application/json',
           },
           //body: JSON.stringify(formData),
-          body: JSON.stringify({ ...formData, status }),
+          body: JSON.stringify({ ...formData, status, creditcardname: cardType }),
         });
 
       if (response.ok) {
