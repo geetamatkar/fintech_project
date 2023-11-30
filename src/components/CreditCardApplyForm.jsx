@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CreditCardApplyForm = () => {
   const [formData, setFormData] = useState({
@@ -12,8 +12,21 @@ const CreditCardApplyForm = () => {
     annualIncome: '',
     monthlyHousingRent: '',
     numExistingCreditCards: '',
-    creditScore: ''
+    creditScore: '',
+    username: '',
   });
+
+  const loggedInUser = localStorage.getItem('loggedInUser');
+
+  useEffect(() => {
+    // Pre-populate the username if the user is logged in
+    if (loggedInUser) {
+      setFormData((prevData) => ({
+        ...prevData,
+        username: loggedInUser,
+      }));
+    }
+  }, [loggedInUser]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +66,7 @@ const CreditCardApplyForm = () => {
     try {
         // Credit card approval check
         const isApproved = handleCreditCardApproval();
+        const status = isApproved ? 'Approved' : 'Disapproved';
   
         if (isApproved) {
           alert('Congratulations! Your credit card application has been approved!');
@@ -69,7 +83,8 @@ const CreditCardApplyForm = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          //body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, status }),
         });
 
       if (response.ok) {

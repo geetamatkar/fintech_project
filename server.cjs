@@ -252,11 +252,14 @@ app.post('/api/credit-card', (req, res) => {
     monthlyHousingRent,
     numExistingCreditCards,
     creditScore,
+    username,
+    status
+
   } = req.body;
 
   const insertCreditCardApplicationQuery = `INSERT INTO credit_card_application 
-    (fullName, dateOfBirth, ssn, email, phoneNumber, bankAccountNumber, employmentStatus, annualIncome, monthlyHousingRent, numExistingCreditCards, creditScore) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    (fullName, dateOfBirth, ssn, email, phoneNumber, bankAccountNumber, employmentStatus, annualIncome, monthlyHousingRent, numExistingCreditCards, creditScore, username, status) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   db.query(
     insertCreditCardApplicationQuery,
@@ -272,6 +275,8 @@ app.post('/api/credit-card', (req, res) => {
       monthlyHousingRent,
       numExistingCreditCards,
       creditScore,
+      username,
+      status
     ],
     (err, result) => {
       if (err) {
@@ -300,9 +305,65 @@ app.post('/api/crypto-form', (req, res) => {
   });
 });
 
+app.get('/api/get-user-details', (req, res) => {
+  const username = req.query.username; // Assuming the username is sent as a query parameter
 
+  const getUserDetailsQuery = 'SELECT firstName, lastName, username FROM users WHERE username = ?';
 
+  db.query(getUserDetailsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user details:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const { firstName, lastName, username } = results[0];
+        res.status(200).send({ firstName, lastName, username });
+      } else {
+        res.status(404).send('User not found');
+      }
+    }
+  });
+});
 
+app.get('/api/user/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserDetailsQuery = 'SELECT firstName, lastName FROM users WHERE username = ?';
+
+  db.query(getUserDetailsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user details:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const { firstName, lastName } = results[0];
+        res.status(200).send({ firstName, lastName });
+      } else {
+        res.status(404).send('User not found');
+      }
+    }
+  });
+});
+
+app.get('/api/user-crypto-applications/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserCryptoApplicationsQuery = 'SELECT COUNT(*) AS count FROM crypto_form WHERE username = ?';
+
+  db.query(getUserCryptoApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user crypto applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const count = results[0].count;
+        res.status(200).json({ username, cryptoApplicationsCount: count });
+      } else {
+        res.status(404).send('User not found or no crypto applications');
+      }
+    }
+  });
+});
 
 
 
