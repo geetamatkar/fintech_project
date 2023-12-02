@@ -483,3 +483,48 @@ app.get('/api/user-loan-applications/:username', (req, res) => {
 
 
 
+/*
+*/
+
+const mongoose = require("mongoose");
+const port_mongo = 3001;
+
+mongoose.connect("mongodb://localhost:27017/fintech", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Create a Mongoose schema for the review
+const reviewSchema = new mongoose.Schema({
+  name: String,
+  title: String,
+  content: String,
+});
+
+const Review = mongoose.model("Review", reviewSchema);
+
+app.post("/api/reviews", async (req, res) => {
+  try {
+    // Create a new review instance using the data from the request body
+    const newReview = new Review({
+      name: req.body.name,
+      title: req.body.title,
+      content: req.body.content,
+    });
+
+    // Save the review to the database
+    await newReview.save();
+
+    // Send a success response
+    res.status(201).json({ message: "Review submitted successfully" });
+  } catch (error) {
+    // Handle errors
+    console.error("Error submitting review:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.listen(port_mongo, () => {
+  console.log(`Server is running on port ${port_mongo}`);
+});
+

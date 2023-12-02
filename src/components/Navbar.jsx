@@ -49,8 +49,7 @@ const Navbar = () => {
       navigate("/DataAnalyticsApplication");
     } else if (title == "Cryptocurrency Analysis") {
       navigate("/DataAnalysisCrypto");
-    } 
-    else if (title == "Profile") {
+    } else if (title == "Profile") {
       navigate("/profile");
     } 
     else {
