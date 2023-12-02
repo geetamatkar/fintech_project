@@ -33,6 +33,7 @@ import binancec from "./binancec.png";
 import bitcoin from "./bitcoin.png";
 import etherium from "./etherium.png";
 import homeImage from "./homeImage.png";
+import defaultImage from "./default profile.png";
 
 
 export {
@@ -70,5 +71,6 @@ export {
   bitcoin,
   binancec,
   etherium,
-  homeImage
+  homeImage,
+  defaultImage,
 };
