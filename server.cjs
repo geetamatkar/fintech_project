@@ -149,11 +149,13 @@ app.post('/api/personal-loan', (req, res) => {
     dateOfBirth,
     creditScore,
     loanRepaymentPeriod,
+    username, 
+    interestRate
   } = req.body;
 
   const insertPersonalLoanQuery = `INSERT INTO personal_loan 
-    (email, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount, ssnNumber, loanReason, dateOfBirth, creditScore, loanRepaymentPeriod) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    (email, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount, ssnNumber, loanReason, dateOfBirth, creditScore, loanRepaymentPeriod, username, interestRate) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   db.query(
     insertPersonalLoanQuery,
@@ -170,6 +172,8 @@ app.post('/api/personal-loan', (req, res) => {
       dateOfBirth,
       creditScore,
       loanRepaymentPeriod,
+      username, 
+      interestRate
     ],
     (err, result) => {
       if (err) {
@@ -434,6 +438,48 @@ app.get('/api/user-crypto-applications-details/:username', (req, res) => {
   });
 });
 
+app.get('/api/user-loan-applications-details/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserLoanApplicationsQuery = `
+    SELECT loanAmount, loanRepaymentPeriod, interestRate , DATE_FORMAT(appliedDate, '%Y-%m-%d') as appliedDate
+    FROM personal_loan 
+    WHERE username = ?
+  `;
+
+  db.query(getUserLoanApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user loan applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).send('User not found or no loan applications');
+      }
+    }
+  });
+});
+
+app.get('/api/user-loan-applications/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserLoanApplicationsQuery = 'SELECT COUNT(*) AS count FROM personal_loan WHERE username = ?';
+
+  db.query(getUserLoanApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user loan applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const count = results[0].count;
+        res.status(200).json({ username, loanApplicationsCount: count });
+      } else {
+        res.status(404).send('User not found or no loan applications');
+      }
+    }
+  });
+});
 
 
 

@@ -9,6 +9,7 @@ const Profile = () => {
     username: '',
   });
 
+  const [loanApplicationsCount, setLoanApplicationsCount] = useState(0);
   const [cryptoApplicationsCount, setCryptoApplicationsCount] = useState(0);
   const [creditApplicationsCount, setCreditApplicationsCount] = useState(0);
   const [userCreditCardApplications, setUserCreditCardApplications] = useState([]);
@@ -16,6 +17,9 @@ const Profile = () => {
 
   const [userCryptoApplications, setUserCryptoApplications] = useState([]);
   const [showCryptoPopup, setShowCryptoPopup] = useState(false);
+
+  const [showLoanPopup, setShowLoanPopup] = useState(false);
+  const [userLoanApplications, setUserLoanApplications] = useState([]);
 
 
   const openPopup = async () => {
@@ -60,6 +64,28 @@ const Profile = () => {
     setShowCryptoPopup(false);
   };
   
+
+  const openLoanPopup = async () => {
+    try {
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const response = await fetch(`http://localhost:8008/api/user-loan-applications-details/${loggedInUser}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user loan applications');
+      }
+  
+      const data = await response.json();
+      setUserLoanApplications(data);
+      setShowLoanPopup(true);
+    } catch (error) {
+      console.error('Error fetching user loan applications:', error.message);
+      // Handle error
+    }
+  };
+  
+  const closeLoanPopup = () => {
+    setShowLoanPopup(false);
+  };
+  
   
   
   useEffect(() => {
@@ -68,6 +94,7 @@ const Profile = () => {
       fetchUserDetails(loggedInUser);
       fetchCryptoApplicationsCount(loggedInUser);
       fetchCreditApplicationsCount(loggedInUser);
+      fetchLoanApplicationsCount(loggedInUser);
     }
   }, []);
   
@@ -87,6 +114,21 @@ const Profile = () => {
     } catch (error) {
       console.error('Error fetching user details:', error.message);
       // Handle error
+    }
+  };
+
+  const fetchLoanApplicationsCount = async (username) => {
+    try {
+      const response = await fetch(`http://localhost:8008/api/user-loan-applications/${username}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch loan applications count');
+      }
+  
+      const data = await response.json();
+      setLoanApplicationsCount(data.loanApplicationsCount);
+    } catch (error) {
+      console.error('Error fetching loan applications count:', error.message);
+      
     }
   };
 
@@ -145,9 +187,12 @@ const Profile = () => {
 
 
           <div className="border-b-2 pb-2">
-            <Link to="/loan-application" className="tile text-white block">
+            <button onClick={openLoanPopup} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Loan Application
-            </Link>
+            </button>
+            <br/>
+            <br/>
+            <p className="text-white text-xs">Total Loan Applications: {loanApplicationsCount}</p>
           </div>
 
 
@@ -294,6 +339,82 @@ const Profile = () => {
           </div>
         </div>
       )}
+
+
+
+{showLoanPopup && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+
+            <div
+              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle  sm:w-full"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-headline"
+            >
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-headline">
+                      Loan Applications
+                    </h3>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full">
+                        <thead>
+                          <tr>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Loan Type 
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Total Loan Taken
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Loan Repayment Period
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Interest Rate
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Date Applied
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {userLoanApplications.map((app, index) => (
+                            <tr key={index}>
+                              <td className="px-6 py-4 whitespace-nowrap">Personal Loan</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.loanAmount}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.loanRepaymentPeriod}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.interestRate}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.appliedDate}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  onClick={closeLoanPopup}
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
 
       
     </div>
