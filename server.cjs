@@ -481,7 +481,69 @@ app.get('/api/user-loan-applications/:username', (req, res) => {
   });
 });
 
+/*
+For admin
+ */
 
+app.get('/api/get-all-users', (req, res) => {
+  const getUsersQuery = `
+    SELECT firstName, lastName, username, DATE_FORMAT(dob, '%Y-%m-%d') as dob, email FROM users
+  `;
+
+  db.query(getUsersQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching users:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+app.get('/api/get-all-loans', (req, res) => {
+  const getLoansQuery = `
+    SELECT * FROM personal_loan
+  `;
+
+  db.query(getLoansQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching loans:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+app.get('/api/get-all-credit-cards', (req, res) => {
+  const getCreditCardsQuery = `
+    SELECT * FROM credit_card_application
+  `;
+
+  db.query(getCreditCardsQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching credit cards:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+app.get('/api/get-all-crypto', (req, res) => {
+  const getCryptoQuery = `
+    SELECT * FROM crypto_form
+  `;
+
+  db.query(getCryptoQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching crypto applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
 
 /*
 */

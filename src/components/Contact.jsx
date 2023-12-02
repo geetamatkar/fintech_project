@@ -70,18 +70,6 @@ const Contact = () => {
 
 
   return (
-    /*
-    <div className="flex">
-      <div className="w-1/2">
-        <h2 className="text-white">Our Organization: Quantum Vault</h2>
-        <p className="text-white">Contact Number: +11234567890</p>
-        <p className="text-white">Email: info@quantumvault.com</p>
-      </div>
-      <div className="w-1/2" style={{ height: '400px', marginTop: '20px' }}>
-        <div id="map" style={{ width: '100%', height: '100%' }}></div>
-      </div>
-    </div>
-    */
 
     <div className={`flex ${styles.paddingY}`}> {/* Apply padding style */}
     <div className={`flex-1 ${styles.flexStart} flex-col xl:px-0 sm:px-16 px-6`}>

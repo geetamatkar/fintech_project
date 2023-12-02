@@ -9,6 +9,8 @@ const Navbar = () => {
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState('');
+  const [username, setUsername] = useState('');
 
   const handleDataAnalyticsClick = () => {
     // Toggle the visibility of sub-items
@@ -20,6 +22,7 @@ const Navbar = () => {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (loggedInUser) {
       setIsLoggedIn(true);
+      setUsername(loggedInUser);
     }
   }, []);
 
@@ -66,10 +69,10 @@ const Navbar = () => {
       </a>{" "}
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => {
-          if (nav.title === "Login" && isLoggedIn) {
-            return null; // Hide "Login" link if logged in
-          } else if (nav.title === "Logout" && !isLoggedIn) {
-            return null; // Hide "Logout" link if not logged in
+          if ((nav.title === "Data Analytics" && username !== 'admin') || 
+              (nav.title === "Login" && isLoggedIn) || 
+              (nav.title === "Logout" && !isLoggedIn)) {
+            return null;
           }
           return (
             <li
@@ -78,17 +81,14 @@ const Navbar = () => {
                 active === nav.title ? "text-white" : "text-dimWhite"
               } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
               onClick={() => {
-                // Handle "Data Analytics" click separately
                 if (nav.title === "Data Analytics") {
                   handleDataAnalyticsClick();
                 } else {
-                  // Handle other links
                   handleNavLinkClick(nav.title);
                 }
               }}
             >
               <a href={`#${nav.id}`}>{nav.title}</a>
-              {/* Render subItems for "Data Analytics" dropdown */}
               {nav.subItems && nav.title === "Data Analytics" && (
                 <ul className={`absolute ${isDropdownActive ? "block" : "hidden"} bg-white text-black mt-2 p-2 space-y-2`}>
                   {nav.subItems.map((subItem) => (
@@ -118,7 +118,7 @@ const Navbar = () => {
         <AutocompleteSearch />
       </div>
     </nav>
-  );
+  ); 
 };
 
 export default Navbar;
