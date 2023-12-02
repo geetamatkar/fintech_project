@@ -1,57 +1,3 @@
-/*import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios'; // Use Axios for making API requests
-
-const Profile = () => {
-  const [userData, setUserData] = useState({});
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    // Fetch user details from the database
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8008/api/get-user-details'); // Replace with appropriate endpoint
-        const { firstName, lastName, username } = response.data;
-
-        setUserData({
-          firstName,
-          lastName,
-          fullName: `${firstName} ${lastName}`,
-        });
-
-        setIsAdmin(username === 'admin');
-      } catch (error) {
-        console.error('Error fetching user details:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  return (
-    <div className="container">
-      <h2>Welcome, {userData.fullName}</h2>
-
-      {!isAdmin && (
-        <div className="flex justify-between flex-wrap mt-4 ">
-          <Link to="/credit-card-application" className="tile text-white">
-            Credit Card Application
-          </Link>
-          <Link to="/loan-application" className="tile text-white">
-            Loan Application
-          </Link>
-          <Link to="/crypto-application" className="tile text-white">
-            Cryptocurrency Application
-          </Link>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Profile;
-*/
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -63,49 +9,65 @@ const Profile = () => {
     username: '',
   });
 
-  /*useEffect(() => {
-    // Fetch user details from your database based on the logged-in user's credentials
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (loggedInUser !== 'admin') {
-      // Assuming you have an endpoint to fetch user details based on the username
-      fetchUserDetails(loggedInUser);
-    }
-  }, []);
+  const [cryptoApplicationsCount, setCryptoApplicationsCount] = useState(0);
+  const [creditApplicationsCount, setCreditApplicationsCount] = useState(0);
+  const [userCreditCardApplications, setUserCreditCardApplications] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
 
-  const fetchUserDetails = async (username) => {
+  const [userCryptoApplications, setUserCryptoApplications] = useState([]);
+  const [showCryptoPopup, setShowCryptoPopup] = useState(false);
+
+
+  const openPopup = async () => {
     try {
-      // Make an API call to fetch user details based on the username
-      const response = await fetch(`http://localhost:8008/api/user/${username}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const response = await fetch(`http://localhost:8008/api/user-credit-card-applications-details/${loggedInUser}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch user details');
+        throw new Error('Failed to fetch user credit card applications');
       }
 
-      const userData = await response.json();
-      setUserDetails({
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        username: userData.username,
-      });
+      const data = await response.json();
+      setUserCreditCardApplications(data);
+      setShowPopup(true);
     } catch (error) {
-      console.error('Error fetching user details:', error.message);
-      // Handle error (e.g., display an error message)
+      console.error('Error fetching user credit card applications:', error.message);
+      // Handle error
     }
   };
- */
 
-  const [cryptoApplicationsCount, setCryptoApplicationsCount] = useState(0);
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
+  const openCryptoPopup = async () => {
+    try {
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const response = await fetch(`http://localhost:8008/api/user-crypto-applications-details/${loggedInUser}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user cryptocurrency applications');
+      }
+  
+      const data = await response.json();
+      setUserCryptoApplications(data);
+      setShowCryptoPopup(true);
+    } catch (error) {
+      console.error('Error fetching user cryptocurrency applications:', error.message);
+      // Handle error
+    }
+  };
+
+  const closeCryptoPopup = () => {
+    setShowCryptoPopup(false);
+  };
+  
+  
   
   useEffect(() => {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (loggedInUser) {
       fetchUserDetails(loggedInUser);
       fetchCryptoApplicationsCount(loggedInUser);
+      fetchCreditApplicationsCount(loggedInUser);
     }
   }, []);
   
@@ -142,6 +104,21 @@ const Profile = () => {
       // Handle error
     }
   };
+
+  const fetchCreditApplicationsCount = async (username) => {
+    try {
+      const response = await fetch(`http://localhost:8008/api/user-credit-applications/${username}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch crypto applications count');
+      }
+  
+      const data = await response.json();
+      setCreditApplicationsCount(data.creditApplicationsCount);
+    } catch (error) {
+      console.error('Error fetching crypto applications count:', error.message);
+      // Handle error
+    }
+  };
   
   return (
     <div className="container mx-auto mt-8 p-8">
@@ -151,25 +128,34 @@ const Profile = () => {
         <br/>
         <h3 className="text-l mb-4 text-white font-sans"> View your active application: </h3>
         <br/>
+
+
+        
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 justify-center border border-gray-300 p-4">
+
+
           <div className="border-b-2 pb-2">
-            <Link to="/credit-card-application" className="tile text-white block">
+            <button onClick={openPopup} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Credit Card Application
-            </Link>
-
+            </button>
             <br/>
-
-            
+            <br/>
+            <p className="text-white text-xs">Total Credit Card Applications: {creditApplicationsCount}</p>          
           </div>
+
+
           <div className="border-b-2 pb-2">
             <Link to="/loan-application" className="tile text-white block">
               Loan Application
             </Link>
           </div>
+
+
           <div className="border-b-2 pb-2">
-            <Link to="/crypto-application" className="tile text-white block">
+            <button onClick={openCryptoPopup} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Cryptocurrency Application
-            </Link>
+            </button>
+            <br/>
             <br/>
 
             <p className="text-white text-xs">Total Crypto Applications: {cryptoApplicationsCount}</p>
@@ -179,7 +165,141 @@ const Profile = () => {
       ) : (
         <h1 className="text-2xl font-bold mb-4">Welcome Admin!</h1>
       )}
+
+
+{showPopup && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+
+            <div
+              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle  sm:w-full"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-headline"
+            >
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-headline">
+                      Credit Card Applications
+                    </h3>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full">
+                        <thead>
+                          <tr>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Credit Card Name
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Applied Date
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Status
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {userCreditCardApplications.map((app, index) => (
+                            <tr key={index}>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.creditcardname}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.appliedDate}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.status}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  onClick={closePopup}
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+{showCryptoPopup && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
+
+            <div
+              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle  sm:w-full"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-headline"
+            >
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-headline">
+                      Crypto Investment Applications
+                    </h3>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full">
+                        <thead>
+                          <tr>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              CryptoCurrency 
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Amount Invested
+                            </th>
+                            <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                              Date Applied
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                          {userCryptoApplications.map((app, index) => (
+                            <tr key={index}>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.cryptocurrencyType}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.amount}</td>
+                              <td className="px-6 py-4 whitespace-nowrap">{app.appliedDate}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  onClick={closeCryptoPopup}
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      
     </div>
+
+    
+
   );
 };
 

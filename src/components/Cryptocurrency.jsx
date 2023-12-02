@@ -1,8 +1,16 @@
 import React from 'react';
 import { binancec, bitcoin, etherium } from '../assets';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Cryptocurrency = () => {
+  const navigate = useNavigate();
+
+  const handleInvestNow = (cryptocurrency) => {
+    navigate('/cryptoform', { state: { cryptocurrency } });
+    localStorage.setItem('cryptocurrency', cryptocurrency);
+  };
+
   return (
     <div className="flex flex-wrap justify-center">
       {/* Bitcoin */}
@@ -25,11 +33,11 @@ const Cryptocurrency = () => {
           </ul>
         </div>
         <div className="px-6 py-4 flex justify-center items-center">
-        <Link to="/cryptoform">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+        
+          <button onClick={() => handleInvestNow('Bitcoin (BTC)')} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             Invest Now
           </button>
-        </Link>
+        
         </div>
       </div>
 

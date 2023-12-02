@@ -55,7 +55,7 @@ const CreditCards = () => {
           </p>
         </div>
         <div className="px-6 py-4 flex justify-center items-center">
-          <button onClick={redirectToCreditCardForm} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <button onClick={() => redirectToCreditCardForm('FREEDOM UNLIMITED® CREDIT CARD')} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             Apply Now
           </button>
         </div>
@@ -80,7 +80,7 @@ const CreditCards = () => {
           </p>
         </div>
         <div className="px-6 py-4 flex justify-center items-center">
-          <button onClick={redirectToCreditCardForm} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <button onClick={() => redirectToCreditCardForm('FREEDOM FLEX® CREDIT CARD')} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
             Apply Now
           </button>
         </div>

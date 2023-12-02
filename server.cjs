@@ -292,12 +292,12 @@ app.post('/api/credit-card', (req, res) => {
 });
 
 app.post('/api/crypto-form', (req, res) => {
-  const { username, amount, accountNumber } = req.body;
+  const { username, amount, accountNumber, cryptocurrencyType } = req.body;
 
   // Assuming 'crypto_form' is the name of your table for crypto form data
-  const insertCryptoFormQuery = `INSERT INTO crypto_form (username, amount, accountNumber) VALUES (?, ?, ?)`;
+  const insertCryptoFormQuery = `INSERT INTO crypto_form (username, amount, accountNumber, cryptocurrencyType) VALUES (?, ?, ?, ?)`;
 
-  db.query(insertCryptoFormQuery, [username, amount, accountNumber], (err, result) => {
+  db.query(insertCryptoFormQuery, [username, amount, accountNumber, cryptocurrencyType], (err, result) => {
     if (err) {
       console.error('Error inserting crypto form data:', err);
       res.status(500).send('Internal Server Error');
@@ -367,6 +367,72 @@ app.get('/api/user-crypto-applications/:username', (req, res) => {
   });
 });
 
+app.get('/api/user-credit-applications/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserCreditApplicationsQuery = 'SELECT COUNT(*) AS count FROM credit_card_application WHERE username = ?';
+
+  db.query(getUserCreditApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user crypto applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const count = results[0].count;
+        res.status(200).json({ username, creditApplicationsCount: count });
+      } else {
+        res.status(404).send('User not found or no crypto applications');
+      }
+    }
+  });
+});
+
+
+app.get('/api/user-credit-card-applications-details/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserCreditCardApplicationsQuery = `
+    SELECT creditcardname, DATE_FORMAT(appliedDate, '%Y-%m-%d') as appliedDate, status 
+    FROM credit_card_application 
+    WHERE username = ?
+  `;
+
+  db.query(getUserCreditCardApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user credit card applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).send('User not found or no credit card applications');
+      }
+    }
+  });
+});
+
+app.get('/api/user-crypto-applications-details/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserCryptoApplicationsQuery = `
+    SELECT cryptocurrencyType, amount, DATE_FORMAT(appliedDate, '%Y-%m-%d') as appliedDate
+    FROM crypto_form
+    WHERE username = ?
+  `;
+
+  db.query(getUserCryptoApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user cryptocurrency applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).send('User not found or no cryptocurrency applications');
+      }
+    }
+  });
+});
 
 
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const CryptoForm = () => {
   const navigate = useNavigate();
@@ -12,6 +13,12 @@ const CryptoForm = () => {
 
   // Fetch the logged-in user's username from localStorage
   const loggedInUser = localStorage.getItem('loggedInUser');
+  const location = useLocation();
+  //const cryptocurrency = location.state?.cryptocurrency || 'aaa';
+  
+  const cryptocurrency = localStorage.getItem('cryptocurrency');
+
+  console.log(cryptocurrency)
 
   useEffect(() => {
     // Pre-populate the username if the user is logged in
@@ -39,6 +46,8 @@ const CryptoForm = () => {
       return;
     }
 
+   
+
     try {
       // Make API call to submit crypto form data
       const response = await fetch('http://localhost:8008/api/crypto-form', {
@@ -46,7 +55,8 @@ const CryptoForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        //body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, cryptocurrencyType: cryptocurrency }),
       });
 
       if (!response.ok) {
@@ -62,6 +72,7 @@ const CryptoForm = () => {
       setFormData({
         ...formData,
         submitted: true,
+        
       });
     } catch (error) {
       console.error('Error submitting crypto form:', error.message);
