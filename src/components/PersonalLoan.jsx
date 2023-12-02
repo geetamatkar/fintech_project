@@ -59,10 +59,17 @@ const PersonalLoan = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const loggedInUser = localStorage.getItem('loggedInUser');
     // Handle form submission, you can send formData to the server
     console.log('Form Data:', formData);
 
-    const dataToSend = { ...formData };
+    //const dataToSend = { ...formData };
+    const dataToSend = {
+      ...formData,
+      username: loggedInUser, 
+      interestRate: 11.25,   
+    };
     if (formData.hasCurrentLoan === 'No') {
     
     dataToSend.numberOfLoans = 0;
@@ -334,18 +341,3 @@ const PersonalLoan = () => {
 };
 
 export default PersonalLoan;
- /**
-  <div className="flex flex-col">
-          <label htmlFor="proofOfIncome" className="text-sm font-medium text-gray-600">
-            Proof of Income:
-          </label>
-          <input
-            type="file"
-            id="proofOfIncome"
-            name="proofOfIncome"
-            className="mt-1 p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-            onChange={handleFileUpload}
-            required
-          />
-        </div>
-  */

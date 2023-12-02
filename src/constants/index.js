@@ -13,7 +13,10 @@ export const navLinks = [
     id: "contact",
     title: "Contact",
   },
-  
+  {
+    id: "profile",
+    title: "Profile",
+  },
   {
     id: "login",
     title: "Login",

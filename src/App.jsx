@@ -12,6 +12,7 @@ import AutoLoan from "./components/AutoLoan";
 import Services from "./components/Services";
 import CreditCards from "./components/Creditcards";
 import LoanTypes from "./components/LoanTypes";
+//import Cryptocurrency from "./components/Cryptocurrency";
 import Cryptocurrency from "./components/CryptoCurrency";
 import CreditCardApplyForm from "./components/CreditCardApplyForm";
 import Contact from "./components/Contact";
@@ -19,6 +20,9 @@ import AutocompleteSearch from "./components/AutoCompleteSearch";
 import ReviewForm from "./components/ReviewForm";
 import DataAnalyticsApplication from "./components/DataAnalyticsApplication";
 import DataAnalysisCrypto from "./components/DataAnalysisCrypto";
+import CryptoForm from "./components/CryptoForm";
+import Profile from "./components/Profile";
+
 
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
@@ -52,8 +56,10 @@ const App = () => (
             <Route path="/ReviewForm" element={<ReviewForm/>} />
             <Route path="/DataAnalyticsApplication" element={<DataAnalyticsApplication/>} />
             <Route path="/DataAnalysisCrypto" element={<DataAnalysisCrypto/>} />
-"
-            {/* Add more routes as needed */}
+            <Route path="/cryptoform" element={<CryptoForm/>} />
+            <Route path="/profile" element={<Profile/>} />
+
+            
           </Routes>
         <Footer />
         </div>
@@ -62,7 +68,7 @@ const App = () => (
       <div className={`bg-primary ${styles.flexStart}`}>
         <div className={`${styles.boxWidth}`}>
           <Routes>
-            {/* Add more routes as needed */}
+            
           </Routes>
         </div>
       </div>
@@ -70,7 +76,7 @@ const App = () => (
       <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
           <Routes>
-            {/* Add more routes as needed */}
+            
           </Routes>
         </div>
       </div>

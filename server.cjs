@@ -48,7 +48,7 @@ app.post('/api/register', (req, res) => {
     );
   });
 
-// Assuming you have already set up your Express app and connected to the database
+
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
@@ -133,7 +133,7 @@ app.post('/api/home-loan', (req, res) => {
   );
 });
 
-// ... (existing code)
+
 
 app.post('/api/personal-loan', (req, res) => {
   const {
@@ -149,11 +149,13 @@ app.post('/api/personal-loan', (req, res) => {
     dateOfBirth,
     creditScore,
     loanRepaymentPeriod,
+    username, 
+    interestRate
   } = req.body;
 
   const insertPersonalLoanQuery = `INSERT INTO personal_loan 
-    (email, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount, ssnNumber, loanReason, dateOfBirth, creditScore, loanRepaymentPeriod) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    (email, monthlyIncome, loanAmount, hasCurrentLoan, numberOfLoans, loanTypes, totalLoanAmount, ssnNumber, loanReason, dateOfBirth, creditScore, loanRepaymentPeriod, username, interestRate) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   db.query(
     insertPersonalLoanQuery,
@@ -170,6 +172,8 @@ app.post('/api/personal-loan', (req, res) => {
       dateOfBirth,
       creditScore,
       loanRepaymentPeriod,
+      username, 
+      interestRate
     ],
     (err, result) => {
       if (err) {
@@ -238,7 +242,6 @@ app.post('/api/auto-loan', (req, res) => {
   );
 });
 
-// ... (existing imports and configurations)
 
 app.post('/api/credit-card', (req, res) => {
   const {
@@ -253,11 +256,15 @@ app.post('/api/credit-card', (req, res) => {
     monthlyHousingRent,
     numExistingCreditCards,
     creditScore,
+    username,
+    status,
+    creditcardname
+
   } = req.body;
 
   const insertCreditCardApplicationQuery = `INSERT INTO credit_card_application 
-    (fullName, dateOfBirth, ssn, email, phoneNumber, bankAccountNumber, employmentStatus, annualIncome, monthlyHousingRent, numExistingCreditCards, creditScore) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    (fullName, dateOfBirth, ssn, email, phoneNumber, bankAccountNumber, employmentStatus, annualIncome, monthlyHousingRent, numExistingCreditCards, creditScore, username, status, creditcardname) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   db.query(
     insertCreditCardApplicationQuery,
@@ -273,6 +280,9 @@ app.post('/api/credit-card', (req, res) => {
       monthlyHousingRent,
       numExistingCreditCards,
       creditScore,
+      username,
+      status,
+      creditcardname
     ],
     (err, result) => {
       if (err) {
@@ -285,12 +295,298 @@ app.post('/api/credit-card', (req, res) => {
   );
 });
 
-// ... (other existing endpoints and server configurations)
+app.post('/api/crypto-form', (req, res) => {
+  const { username, amount, accountNumber, cryptocurrencyType } = req.body;
+
+  // Assuming 'crypto_form' is the name of your table for crypto form data
+  const insertCryptoFormQuery = `INSERT INTO crypto_form (username, amount, accountNumber, cryptocurrencyType) VALUES (?, ?, ?, ?)`;
+
+  db.query(insertCryptoFormQuery, [username, amount, accountNumber, cryptocurrencyType], (err, result) => {
+    if (err) {
+      console.error('Error inserting crypto form data:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).send('Crypto form submitted successfully');
+    }
+  });
+});
+
+app.get('/api/get-user-details', (req, res) => {
+  const username = req.query.username; // Assuming the username is sent as a query parameter
+
+  const getUserDetailsQuery = 'SELECT firstName, lastName, username FROM users WHERE username = ?';
+
+  db.query(getUserDetailsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user details:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const { firstName, lastName, username } = results[0];
+        res.status(200).send({ firstName, lastName, username });
+      } else {
+        res.status(404).send('User not found');
+      }
+    }
+  });
+});
+
+app.get('/api/user/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserDetailsQuery = 'SELECT firstName, lastName FROM users WHERE username = ?';
+
+  db.query(getUserDetailsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user details:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const { firstName, lastName } = results[0];
+        res.status(200).send({ firstName, lastName });
+      } else {
+        res.status(404).send('User not found');
+      }
+    }
+  });
+});
+
+app.get('/api/user-crypto-applications/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserCryptoApplicationsQuery = 'SELECT COUNT(*) AS count FROM crypto_form WHERE username = ?';
+
+  db.query(getUserCryptoApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user crypto applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const count = results[0].count;
+        res.status(200).json({ username, cryptoApplicationsCount: count });
+      } else {
+        res.status(404).send('User not found or no crypto applications');
+      }
+    }
+  });
+});
+
+app.get('/api/user-credit-applications/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserCreditApplicationsQuery = 'SELECT COUNT(*) AS count FROM credit_card_application WHERE username = ?';
+
+  db.query(getUserCreditApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user crypto applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const count = results[0].count;
+        res.status(200).json({ username, creditApplicationsCount: count });
+      } else {
+        res.status(404).send('User not found or no crypto applications');
+      }
+    }
+  });
+});
 
 
+app.get('/api/user-credit-card-applications-details/:username', (req, res) => {
+  const { username } = req.params;
 
+  const getUserCreditCardApplicationsQuery = `
+    SELECT creditcardname, DATE_FORMAT(appliedDate, '%Y-%m-%d') as appliedDate, status 
+    FROM credit_card_application 
+    WHERE username = ?
+  `;
 
+  db.query(getUserCreditCardApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user credit card applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).send('User not found or no credit card applications');
+      }
+    }
+  });
+});
 
+app.get('/api/user-crypto-applications-details/:username', (req, res) => {
+  const { username } = req.params;
 
+  const getUserCryptoApplicationsQuery = `
+    SELECT cryptocurrencyType, amount, DATE_FORMAT(appliedDate, '%Y-%m-%d') as appliedDate
+    FROM crypto_form
+    WHERE username = ?
+  `;
 
+  db.query(getUserCryptoApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user cryptocurrency applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).send('User not found or no cryptocurrency applications');
+      }
+    }
+  });
+});
+
+app.get('/api/user-loan-applications-details/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserLoanApplicationsQuery = `
+    SELECT loanAmount, loanRepaymentPeriod, interestRate , DATE_FORMAT(appliedDate, '%Y-%m-%d') as appliedDate
+    FROM personal_loan 
+    WHERE username = ?
+  `;
+
+  db.query(getUserLoanApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user loan applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).send('User not found or no loan applications');
+      }
+    }
+  });
+});
+
+app.get('/api/user-loan-applications/:username', (req, res) => {
+  const { username } = req.params;
+
+  const getUserLoanApplicationsQuery = 'SELECT COUNT(*) AS count FROM personal_loan WHERE username = ?';
+
+  db.query(getUserLoanApplicationsQuery, [username], (err, results) => {
+    if (err) {
+      console.error('Error fetching user loan applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      if (results.length > 0) {
+        const count = results[0].count;
+        res.status(200).json({ username, loanApplicationsCount: count });
+      } else {
+        res.status(404).send('User not found or no loan applications');
+      }
+    }
+  });
+});
+
+/*
+For admin
+ */
+
+app.get('/api/get-all-users', (req, res) => {
+  const getUsersQuery = `
+    SELECT firstName, lastName, username, DATE_FORMAT(dob, '%Y-%m-%d') as dob, email FROM users
+  `;
+
+  db.query(getUsersQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching users:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+app.get('/api/get-all-loans', (req, res) => {
+  const getLoansQuery = `
+    SELECT * FROM personal_loan
+  `;
+
+  db.query(getLoansQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching loans:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+app.get('/api/get-all-credit-cards', (req, res) => {
+  const getCreditCardsQuery = `
+    SELECT * FROM credit_card_application
+  `;
+
+  db.query(getCreditCardsQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching credit cards:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+app.get('/api/get-all-crypto', (req, res) => {
+  const getCryptoQuery = `
+    SELECT * FROM crypto_form
+  `;
+
+  db.query(getCryptoQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching crypto applications:', err);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+/*
+*/
+
+const mongoose = require("mongoose");
+const port_mongo = 3001;
+
+mongoose.connect("mongodb://localhost:27017/fintech", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Create a Mongoose schema for the review
+const reviewSchema = new mongoose.Schema({
+  name: String,
+  title: String,
+  content: String,
+});
+
+const Review = mongoose.model("Review", reviewSchema);
+
+app.post("/api/reviews", async (req, res) => {
+  try {
+    // Create a new review instance using the data from the request body
+    const newReview = new Review({
+      name: req.body.name,
+      title: req.body.title,
+      content: req.body.content,
+    });
+
+    // Save the review to the database
+    await newReview.save();
+
+    // Send a success response
+    res.status(201).json({ message: "Review submitted successfully" });
+  } catch (error) {
+    // Handle errors
+    console.error("Error submitting review:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.listen(port_mongo, () => {
+  console.log(`Server is running on port ${port_mongo}`);
+});
 

@@ -33,7 +33,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
    // const navigate = useNavigate();
-    // Validation logic (you can add more specific validation here if needed)
+    
     if (!username || !password) {
       setError('Please enter both username and password.');
       return;

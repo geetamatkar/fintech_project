@@ -7,6 +7,7 @@ const ReviewForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  /*
   const handleSubmit = () => {
     // Perform any validation if needed
     const reviewData = { name, title, content };
@@ -20,6 +21,34 @@ const ReviewForm = () => {
     setName("");
     setTitle("");
     setContent("");
+  };
+  */
+  const handleSubmit = async () => {
+    try {
+      // Send a POST request to the server with review data
+      const response = await fetch("http://localhost:3001/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, title, content }),
+      });
+  
+      // Check if the request was successful
+      if (response.ok) {
+        // Review submitted successfully, you can handle the response as needed
+        console.log("Review submitted successfully");
+      } else {
+        // Handle errors if the request was not successful
+        console.error("Failed to submit review");
+      }
+  
+      // Close the form
+      //onClose();
+    } catch (error) {
+      // Handle network or other errors
+      console.error("Error submitting review:", error);
+    }
   };
 
   // Retrieve the stored data from local storage
@@ -85,3 +114,4 @@ const ReviewForm = () => {
 };
 
 export default ReviewForm;
+
