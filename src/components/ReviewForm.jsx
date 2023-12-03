@@ -38,6 +38,10 @@ const ReviewForm = () => {
       if (response.ok) {
         // Review submitted successfully, you can handle the response as needed
         console.log("Review submitted successfully");
+        alert("Review submitted successfully! Your feedback has been stored.");
+        setName("");
+        setTitle("");
+        setContent("");
       } else {
         // Handle errors if the request was not successful
         console.error("Failed to submit review");
