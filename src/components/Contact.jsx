@@ -25,7 +25,8 @@ const Contact = () => {
         e.preventDefault();
     
         // Use Google Geocoding API to convert pin code to coordinates
-        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${userPin}&${googleMapsApiKey}`)
+        //fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${userPin}&${googleMapsApiKey}`)
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${userPin}&key=AIzaSyAzHKLQPg2XBB_2nfWmcl0MEzaYesitNzU&`)
           .then((response) => response.json())
           .then((data) => {
             if (data.results && data.results.length > 0) {

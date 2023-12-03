@@ -586,6 +586,19 @@ app.post("/api/reviews", async (req, res) => {
   }
 });
 
+
+// Add a new endpoint to fetch reviews
+app.get("/api/getReviews", async (req, res) => {
+  try {
+    const reviews = await Review.find();
+    res.status(200).json(reviews);
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 app.listen(port_mongo, () => {
   console.log(`Server is running on port ${port_mongo}`);
 });

@@ -13,6 +13,26 @@ const Testimonials = () => {
     const storedReviewData = JSON.parse(localStorage.getItem("reviewData")) || [];
     const storedReviewArray = Array.isArray(storedReviewData) ? storedReviewData : [storedReviewData];
 
+    useEffect(() => {
+      // Fetch reviews from the server
+      async function fetchReviews() {
+        try {
+          console.log("Fetching reviews...");
+          const response = await fetch("http://localhost:3001/api/getReviews");
+          if (response.ok) {
+            const reviews = await response.json();
+            setAllFeedback(reviews);
+          } else {
+            console.error("Failed to fetch reviews");
+          }
+        } catch (error) {
+          console.error("Error fetching reviews:", error);
+        }
+      }
+  
+      fetchReviews();
+    }, []);
+
   useEffect(() => {
     // Combine the stored and predefined feedback data
     setAllFeedback([...storedReviewArray, ...feedback]);
