@@ -886,7 +886,7 @@ const Profile = () => {
       {/* Button using Tailwind CSS and Link component */}
       <Link to="/recommendation">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Go to Recommendation
+          Go To Financial Recommendation System
         </button>
       </Link>
     </div>
