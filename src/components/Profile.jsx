@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { sapphire, freedomflex, unlimited } from '../assets';
+import { homeloan, personalloan, auto } from '../assets';
 
 
 const Profile = () => {
@@ -36,6 +37,10 @@ const Profile = () => {
   const [cryptoData, setCryptoData] = useState([]);
   const [showAdminCryptoPopup, setShowAdminCryptoPopup] = useState(false);
 
+
+  const redirectToAutoLoan = () => {
+    navigate('/auto-loan'); // Redirect to the PersonalLoan route
+  };
 
 
   const openPopup = async () => {
@@ -858,9 +863,62 @@ const Profile = () => {
       {/* Button using Tailwind CSS and Link component */}
       <Link to="/recommendation">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Go to Recommendation
+          Go To Financial Recommendation System
         </button>
       </Link>
+    </div>
+
+    <div className="flex flex-wrap justify-center mt-10">
+      {/* Sapphire Preferred Card */}
+      <div className="max-w-sm m-4 bg-white rounded overflow-hidden shadow-lg">
+        <div className="px-6 py-4">
+          <div className="font-bold text-l mb-2">SAPPHIRE PREFERRED® CREDIT CARD</div>
+          <img
+          className="w-full h-30 object-cover"
+          style={{ padding: '10px' }} 
+          src={sapphire}
+          alt="Sapphire Preferred Card"
+        />
+          <p className="text-gray-700 text-base">
+            <ul className="list-disc list-inside">
+              <li>Earn 60,000 bonus points</li>
+              <li>Earn 3X on dining and 2X on travel</li>
+              <li>$95 Annual Fee</li>
+            </ul>
+          </p>
+        </div>
+        <div className="px-6 py-4 flex justify-center items-center">
+          <button onClick={() => redirectToCreditCardForm('SAPPHIRE PREFERRED® CREDIT CARD')} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Apply Now
+          </button>
+        </div>
+      </div>
+
+      {/* Loan Card */}
+      <div className="max-w-sm m-4 bg-white rounded overflow-hidden shadow-lg">
+        <div className="px-6 py-4">
+          <div className="font-bold text-xl mb-2">Auto Loan</div>
+          <img
+          className="w-full h-30 object-cover"
+          style={{ padding: '10px' }} 
+          src={auto}
+          alt="Auto Loan"
+        />
+          <p className="text-gray-700 text-base">
+            An auto loan provides financing for the purchase of a vehicle, whether new or used.
+          </p>
+          <ul className="list-disc list-inside">
+            <li>Competitive APR rates for vehicle financing</li>
+            <li>Flexible repayment options</li>
+            <li>Quick approval process</li>
+          </ul>
+        </div>
+        <div className="px-6 py-4 flex justify-center items-center">
+          <button onClick={redirectToAutoLoan} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Apply Now
+          </button>
+        </div>
+      </div>
     </div>
 
                             
