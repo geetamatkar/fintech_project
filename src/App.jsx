@@ -23,8 +23,7 @@ import DataAnalysisCrypto from "./components/DataAnalysisCrypto";
 import CryptoForm from "./components/CryptoForm";
 import Profile from "./components/Profile";
 import FinancialRecommendationSystem from "./components/FinancialRecommendationSystem";
-
-
+import RetirementPlanningOpenai from "./components/RetirementPlanningOpenai"
 const Home = () => (
   <div className={`${styles.boxWidth}`}>
     <Hero />
@@ -60,6 +59,7 @@ const App = () => (
             <Route path="/cryptoform" element={<CryptoForm/>} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/recommendation" element={<FinancialRecommendationSystem/>} />
+            <Route path="/retirementplanning" element={<RetirementPlanningOpenai/>} />
 
             
           </Routes>

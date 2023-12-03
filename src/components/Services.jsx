@@ -43,7 +43,7 @@ const Services = () => {
       <ServiceCard
         title="Retirement Planning"
         description="Secure your future with our Retirement Planning service. We offer expert guidance to help you plan and invest wisely, ensuring a comfortable and stress-free retirement."
-        linkTo="/apply/retirement-planning"
+        linkTo="/retirementplanning"
       />
     </div>
   );
