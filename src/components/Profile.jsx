@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { sapphire, freedomflex, unlimited } from '../assets';
 
 
 const Profile = () => {
@@ -852,9 +853,17 @@ const Profile = () => {
           </div>
         </div>
       )}
-     
 
-      
+    <div className="flex justify-center mt-10">
+      {/* Button using Tailwind CSS and Link component */}
+      <Link to="/recommendation">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Go to Recommendation
+        </button>
+      </Link>
+    </div>
+
+                            
     </div>
 
     

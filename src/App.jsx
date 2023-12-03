@@ -22,6 +22,7 @@ import DataAnalyticsApplication from "./components/DataAnalyticsApplication";
 import DataAnalysisCrypto from "./components/DataAnalysisCrypto";
 import CryptoForm from "./components/CryptoForm";
 import Profile from "./components/Profile";
+import FinancialRecommendationSystem from "./components/FinancialRecommendationSystem";
 
 
 const Home = () => (
@@ -58,6 +59,7 @@ const App = () => (
             <Route path="/DataAnalysisCrypto" element={<DataAnalysisCrypto/>} />
             <Route path="/cryptoform" element={<CryptoForm/>} />
             <Route path="/profile" element={<Profile/>} />
+            <Route path="/recommendation" element={<FinancialRecommendationSystem/>} />
 
             
           </Routes>

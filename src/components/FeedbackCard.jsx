@@ -1,4 +1,5 @@
 import { quotes } from "../assets";
+import { defaultImage } from "../assets";
 
 const FeedbackCard = ({ content, name, title, img }) => (
   <div className="flex justify-between flex-col px-10 py-12 rounded-[20px]  max-w-[370px] md:mr-10 sm:mr-5 mr-0 my-5 feedback-card">
@@ -8,7 +9,7 @@ const FeedbackCard = ({ content, name, title, img }) => (
     </p>
 
     <div className="flex flex-row">
-      <img src={img} alt={name} className="w-[48px] h-[48px] rounded-full" />
+      <img src={img || defaultImage} alt={defaultImage} className="w-[48px] h-[48px] rounded-full" />
       <div className="flex flex-col ml-4">
         <h4 className="font-poppins font-semibold text-[20px] leading-[32px] text-white">
           {name}
