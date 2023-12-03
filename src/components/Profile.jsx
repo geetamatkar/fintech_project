@@ -186,29 +186,6 @@ const Profile = () => {
     }
   };
 
-  /*
-  const openLoanPopup = async () => {
-    try {
-      const loggedInUser = localStorage.getItem('loggedInUser');
-      const response = await fetch(`http://localhost:8008/api/user-loan-applications-details/${loggedInUser}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch user loan applications');
-      }
-  
-      const data = await response.json();
-      setUserLoanApplications(data);
-      setShowLoanPopup(true);
-    } catch (error) {
-      console.error('Error fetching user loan applications:', error.message);
-      // Handle error
-    }
-  };
-  
-  const closeLoanPopup = () => {
-    setShowLoanPopup(false);
-  };
-  */
-
   const fetchUserData = async () => {
     try {
       const response = await fetch(`http://localhost:8008/api/get-all-users`);

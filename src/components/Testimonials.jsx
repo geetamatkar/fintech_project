@@ -10,10 +10,10 @@ const Testimonials = () => {
   const [allFeedback, setAllFeedback] = useState([]);
   const [renderedFeedback, setRenderedFeedback] = useState([]);
 
-  useEffect(() => {
     const storedReviewData = JSON.parse(localStorage.getItem("reviewData")) || [];
     const storedReviewArray = Array.isArray(storedReviewData) ? storedReviewData : [storedReviewData];
 
+  useEffect(() => {
     // Combine the stored and predefined feedback data
     setAllFeedback([...storedReviewArray, ...feedback]);
   }, []); // Run once on mount
